@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Appointments - SnipTime</title>
+    <link rel="stylesheet" href="{% static 'booking/style.css' %}">
+</head>
+<body>
+    <nav>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'service_list' %}">Book a Service</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </nav>
+
+    <div class="container">
+        <h1>My Appointments</h1>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p class="success">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <table>
+            <tr>
+                <th>Service</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            {% for appointment in appointments %}
+            <tr>
+                <td>{{ appointment.service.name }}</td>
+                <td>{{ appointment.date }}</td>
+                <td>{{ appointment.time }}</td>
+                <td>{{ appointment.status }}</td>
+                <td>
+                    {% if appointment.status != 'cancelled' %}
+                        <a href="{% url 'edit_appointment' appointment.id %}">Edit</a>
+                        |
+                        <a href="{% url 'cancel_appointment' appointment.id %}" onclick="return confirm('Cancel this appointment?');">Cancel</a>
+                    {% else %}
+                        —
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">You have no appointments yet.</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

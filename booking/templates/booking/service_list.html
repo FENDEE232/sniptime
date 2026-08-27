@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Our Services - SnipTime</title>
+    <link rel="stylesheet" href="{% static 'booking/style.css' %}">
+</head>
+<body>
+    <nav>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'my_appointments' %}">My Appointments</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </nav>
+
+    <div class="container">
+        <h1>Our Services</h1>
+
+        <ul>
+            {% for service in services %}
+                <li>
+                    <strong>{{ service.name }}</strong> — {{ service.duration_minutes }} mins — ${{ service.price }}
+                    <br>{{ service.description }}
+                    <br><a href="{% url 'book_appointment' service.id %}">Book this service</a>
+                </li>
+                <br>
+            {% empty %}
+                <p>No services available yet.</p>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - SnipTime</title>
+    <link rel="stylesheet" href="{% static 'booking/style.css' %}">
+</head>
+<body>
+    <nav>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'register' %}">Register</a>
+    </nav>
+
+    <div class="container">
+        <h1>Login</h1>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            <label>Username:</label><br>
+            <input type="text" name="username"><br>
+            <label>Password:</label><br>
+            <input type="password" name="password"><br><br>
+            <button type="submit">Login</button>
+        </form>
+        <p><a href="{% url 'register' %}">Don't have an account? Register here</a></p>
+    </div>
+</body>
+</html>
